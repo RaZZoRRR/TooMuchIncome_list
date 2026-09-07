@@ -73,6 +73,16 @@ async function init() {
 
         noDataMessage.classList.add("hidden");
 
+        for (const player of players) {
+            try {
+                const status = await getPlayerStatus(apiKeyInput.value.trim(), player.id);
+                player.status = status.profile?.status?.description || "Unknown";
+            } catch (error) {
+                console.error(`Failed to get status for ${player.name}:`, error);
+                player.status = "Error";
+            }
+        }
+        
         players.forEach((player) => {
             const row = document.createElement("tr");
 
