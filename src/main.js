@@ -149,9 +149,19 @@ fetchButton.addEventListener("click", async (event) => {
     try {
         const data = await testTornApi(apiKey);
 
-        console.log("Torn API works:", data);
-    } catch (error) {
-        console.error("Torn API failed:", error);
+console.log("Torn API works:", data);
+
+const players = await loadPlayers();
+
+if (players.length > 0) {
+    const player = players[0];
+
+    console.log("Checking player:", player);
+
+    const status = await getPlayerStatus(apiKey, player.id);
+
+    console.log("Player status:", status);
+}
     }
 });
 
