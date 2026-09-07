@@ -1,6 +1,22 @@
 const SUPABASE_URL = "https://dsknucquniwmaogpbyax.supabase.co";
 const SUPABASE_KEY = "sb_publishable_CxUR4WE-nJtN5JstJNeF-Q_PSShAYto";
 
+async function testTornApi(apiKey) {
+    const response = await fetch(
+        `https://api.torn.com/v2/user/?selections=profile&key=${encodeURIComponent(apiKey)}`
+    );
+
+    const data = await response.json();
+
+    if (!response.ok || data.error) {
+        throw new Error(
+            data.error?.error || `Torn API error: ${response.status}`
+        );
+    }
+
+    return data;
+}
+
 async function loadPlayers() {
     const response = await fetch(
         `${SUPABASE_URL}/rest/v1/players?select=id,name,level,total,strength,defense,speed,dexterity&order=level.desc`,
@@ -96,5 +112,23 @@ async function init() {
         console.error("Failed to load players:", error);
     }
 }
+
+const apiKeyInput = document.getElementById("api-key");
+
+apiKeyInput.addEventListener("change", async () => {
+    const apiKey = apiKeyInput.value.trim();
+
+    if (!apiKey) {
+        return;
+    }
+
+    try {
+        const data = await testTornApi(apiKey);
+
+        console.log("Torn API works:", data);
+    } catch (error) {
+        console.error("Torn API failed:", error);
+    }
+});
 
 init();
