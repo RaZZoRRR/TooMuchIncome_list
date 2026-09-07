@@ -161,19 +161,22 @@ fetchButton.addEventListener("click", async (event) => {
 
         console.log("Torn API works:", data);
 
-        const players = await loadPlayers();
+        cconst players = await loadPlayers();
 
-        if (players.length > 0) {
-            const player = players[0];
+for (const player of players) {
+    try {
+        console.log("Checking player:", player);
 
-            console.log("Checking player:", player);
+        const status = await getPlayerStatus(apiKey, player.id);
 
-            const status = await getPlayerStatus(apiKey, player.id);
+        player.status = status.profile?.status?.description || "Unknown";
 
-            console.log("Player status:", status);
-            console.log("Player profile:", status.profile);
-            console.log("Player status data:", status.profile?.status);
-        }
+        console.log("Player status:", status);
+    } catch (error) {
+        console.error(`Failed to get status for ${player.name}:`, error);
+        player.status = "Error";
+    }
+}
     } catch (error) {
         console.error("Torn API failed:", error);
     }
