@@ -140,7 +140,10 @@ async function renderPlayers(players) {
                 ${player.dexterity}
             </td>
 
-            <td class="px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+            <td
+                id="status-${player.id}"
+                class="px-3 py-4 text-sm text-gray-500 dark:text-gray-400"
+            >
                 ${player.status || "Unknown"}
             </td>
 
