@@ -116,11 +116,20 @@ async function init() {
 const apiKeyInput = document.getElementById("api-key");
 
 apiKeyInput.addEventListener("change", async () => {
+    const apiKeyInput = document.getElementById("api-key");
+const fetchButton = document.getElementById("fetch-button");
+
+fetchButton.addEventListener("click", async (event) => {
+    event.preventDefault();
+
     const apiKey = apiKeyInput.value.trim();
 
     if (!apiKey) {
+        console.log("Torn API key is missing");
         return;
     }
+
+    console.log("Testing Torn API...");
 
     try {
         const data = await testTornApi(apiKey);
