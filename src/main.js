@@ -1,4 +1,3 @@
-```js
 console.log("Too Much Income List - Torn API test v1");
 
 const SUPABASE_URL = "https://dsknucquniwmaogpbyax.supabase.co";
@@ -173,4 +172,3 @@ fetchButton.addEventListener("click", async (event) => {
         console.error("Torn API failed:", error);
     }
 });
-```
