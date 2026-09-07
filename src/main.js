@@ -61,6 +61,38 @@ async function loadPlayers() {
         return `${minutes}m ${seconds}s`;
     }
 
+    function startHospitalCountdown(players) {
+        setInterval(() => {
+            players.forEach((player) => {
+                if (!player.hospitalUntil) {
+                    return;
+                }
+    
+                const statusCell = document.getElementById(
+                    `status-${player.id}`
+                );
+    
+                if (!statusCell) {
+                    return;
+                }
+    
+                const remaining = Math.max(
+                    0,
+                    player.hospitalUntil - Math.floor(Date.now() / 1000)
+                );
+    
+                if (remaining <= 0) {
+                    statusCell.textContent = "Hospital";
+                    return;
+                }
+    
+                statusCell.textContent = formatHospitalTime(
+                    player.hospitalUntil
+                );
+            });
+        }, 1000);
+    }
+
 async function renderPlayers(players) {
     const table = document.getElementById("data-table");
     const tableBody = document.getElementById("table-body");
