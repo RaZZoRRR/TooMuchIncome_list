@@ -217,7 +217,7 @@ fetchButton.addEventListener("click", async (event) => {
         }
 
         await renderPlayers(players);
-
+        startHospitalCountdown(players);
     } catch (error) {
         console.error("Torn API failed:", error);
     }
