@@ -73,6 +73,8 @@ async function loadPlayers() {
                 const statusCell = document.getElementById(
                     `status-${player.id}`
                 );
+
+                console.log("Status cell:", statusCell);
     
                 if (!statusCell) {
                     return;
