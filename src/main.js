@@ -152,8 +152,13 @@ fetchButton.addEventListener("click", async (event) => {
 
                 const status = await getPlayerStatus(apiKey, player.id);
 
-                player.status =
-                    status.profile?.status?.description || "Unknown";
+                const playerStatus = status.profile?.status;
+
+                if (playerStatus?.state === "Hospital" && playerStatus.until) {
+                    player.status = `Hospital until ${playerStatus.until}`;
+                } else {
+                    player.status = playerStatus?.description || "Unknown";
+                }
 
                 console.log("Player status:", status);
             } catch (error) {
