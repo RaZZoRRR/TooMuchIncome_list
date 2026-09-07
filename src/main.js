@@ -163,7 +163,7 @@ fetchButton.addEventListener("click", async (event) => {
                 const playerStatus = status.profile?.status;
 
                 if (playerStatus?.state === "Hospital" && playerStatus.until) {
-                    player.status = `Hospital until ${playerStatus.until}`;
+                    player.status = formatHospitalTime(playerStatus.until);
                 } else {
                     player.status = playerStatus?.description || "Unknown";
                 }
