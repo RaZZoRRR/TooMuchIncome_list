@@ -114,9 +114,6 @@ async function init() {
 }
 
 const apiKeyInput = document.getElementById("api-key");
-
-apiKeyInput.addEventListener("change", async () => {
-    const apiKeyInput = document.getElementById("api-key");
 const fetchButton = document.getElementById("fetch-button");
 
 fetchButton.addEventListener("click", async (event) => {
