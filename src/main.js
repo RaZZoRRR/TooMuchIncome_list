@@ -161,6 +161,8 @@ fetchButton.addEventListener("click", async (event) => {
             const status = await getPlayerStatus(apiKey, player.id);
 
             console.log("Player status:", status);
+            console.log("Player profile:", status.profile);
+            console.log("Player status data:", status.profile?.status);
         }
     } catch (error) {
         console.error("Torn API failed:", error);
