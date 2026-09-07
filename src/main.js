@@ -63,7 +63,6 @@ async function loadPlayers() {
 
     function startHospitalCountdown(players) {
         setInterval(() => {
-            console.log("Countdown tick");
             
             players.forEach((player) => {
                 if (!player.hospitalUntil) {
