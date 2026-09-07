@@ -1,3 +1,4 @@
+```js
 console.log("Too Much Income List - Torn API test v1");
 
 const SUPABASE_URL = "https://dsknucquniwmaogpbyax.supabase.co";
@@ -53,92 +54,73 @@ async function loadPlayers() {
     return await response.json();
 }
 
-async function init() {
-    try {
-        const players = await loadPlayers();
+async function renderPlayers(players) {
+    const table = document.getElementById("data-table");
+    const tableBody = document.getElementById("table-body");
+    const noDataMessage = document.getElementById("no-data-message");
 
-        console.log("Players loaded:", players);
+    tableBody.innerHTML = "";
 
-        const table = document.getElementById("data-table");
-        const tableBody = document.getElementById("table-body");
-        const noDataMessage = document.getElementById("no-data-message");
-
-        tableBody.innerHTML = "";
-
-        if (players.length === 0) {
-            noDataMessage.classList.remove("hidden");
-            table.classList.remove("hidden");
-            return;
-        }
-
-        noDataMessage.classList.add("hidden");
-
-        for (const player of players) {
-            try {
-                const status = await getPlayerStatus(apiKeyInput.value.trim(), player.id);
-                player.status = status.profile?.status?.description || "Unknown";
-            } catch (error) {
-                console.error(`Failed to get status for ${player.name}:`, error);
-                player.status = "Error";
-            }
-        }
-        
-        players.forEach((player) => {
-            const row = document.createElement("tr");
-
-            row.innerHTML = `
-                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 dark:text-gray-200 sm:pl-6">
-                    ${player.name}
-                </td>
-
-                <td class="hidden px-3 py-4 text-sm text-gray-500 dark:text-gray-400 lg:table-cell">
-                    ${player.level}
-                </td>
-
-                <td class="hidden px-3 py-4 text-sm text-gray-500 dark:text-gray-400 lg:table-cell">
-                    ${player.total}
-                </td>
-
-                <td class="hidden px-3 py-4 text-sm text-gray-500 dark:text-gray-400 lg:table-cell">
-                    ${player.strength}
-                </td>
-
-                <td class="hidden px-3 py-4 text-sm text-gray-500 dark:text-gray-400 lg:table-cell">
-                    ${player.defense}
-                </td>
-
-                <td class="hidden px-3 py-4 text-sm text-gray-500 dark:text-gray-400 lg:table-cell">
-                    ${player.speed}
-                </td>
-
-                <td class="hidden px-3 py-4 text-sm text-gray-500 dark:text-gray-400 lg:table-cell">
-                    ${player.dexterity}
-                </td>
-
-                <td class="px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
-                    ${player.status || "Loading..."}
-                </td>
-
-                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                    <a
-                        href="https://www.torn.com/profiles.php?XID=${player.id}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="text-blue-600 hover:text-blue-500"
-                    >
-                        Attack
-                    </a>
-                </td>
-            `;
-
-            tableBody.appendChild(row);
-        });
-
+    if (players.length === 0) {
+        noDataMessage.classList.remove("hidden");
         table.classList.remove("hidden");
-
-    } catch (error) {
-        console.error("Failed to load players:", error);
+        return;
     }
+
+    noDataMessage.classList.add("hidden");
+
+    players.forEach((player) => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 dark:text-gray-200 sm:pl-6">
+                ${player.name}
+            </td>
+
+            <td class="hidden px-3 py-4 text-sm text-gray-500 dark:text-gray-400 lg:table-cell">
+                ${player.level}
+            </td>
+
+            <td class="hidden px-3 py-4 text-sm text-gray-500 dark:text-gray-400 lg:table-cell">
+                ${player.total}
+            </td>
+
+            <td class="hidden px-3 py-4 text-sm text-gray-500 dark:text-gray-400 lg:table-cell">
+                ${player.strength}
+            </td>
+
+            <td class="hidden px-3 py-4 text-sm text-gray-500 dark:text-gray-400 lg:table-cell">
+                ${player.defense}
+            </td>
+
+            <td class="hidden px-3 py-4 text-sm text-gray-500 dark:text-gray-400 lg:table-cell">
+                ${player.speed}
+            </td>
+
+            <td class="hidden px-3 py-4 text-sm text-gray-500 dark:text-gray-400 lg:table-cell">
+                ${player.dexterity}
+            </td>
+
+            <td class="px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+                ${player.status || "Unknown"}
+            </td>
+
+            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                <a
+                    href="https://www.torn.com/profiles.php?XID=${player.id}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-blue-600 hover:text-blue-500"
+                >
+                    Attack
+                </a>
+            </td>
+        `;
+
+        tableBody.appendChild(row);
+    });
+
+    table.classList.remove("hidden");
 }
 
 const apiKeyInput = document.getElementById("api-key");
@@ -161,25 +143,34 @@ fetchButton.addEventListener("click", async (event) => {
 
         console.log("Torn API works:", data);
 
-        cconst players = await loadPlayers();
+        const players = await loadPlayers();
 
-for (const player of players) {
-    try {
-        console.log("Checking player:", player);
+        console.log("Players loaded:", players);
 
-        const status = await getPlayerStatus(apiKey, player.id);
+        for (const player of players) {
+            try {
+                console.log("Checking player:", player);
 
-        player.status = status.profile?.status?.description || "Unknown";
+                const status = await getPlayerStatus(apiKey, player.id);
 
-        console.log("Player status:", status);
-    } catch (error) {
-        console.error(`Failed to get status for ${player.name}:`, error);
-        player.status = "Error";
-    }
-}
+                player.status =
+                    status.profile?.status?.description || "Unknown";
+
+                console.log("Player status:", status);
+            } catch (error) {
+                console.error(
+                    `Failed to get status for ${player.name}:`,
+                    error
+                );
+
+                player.status = "Error";
+            }
+        }
+
+        await renderPlayers(players);
+
     } catch (error) {
         console.error("Torn API failed:", error);
     }
 });
-
-init();
+```
