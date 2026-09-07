@@ -19,6 +19,22 @@ async function testTornApi(apiKey) {
     return data;
 }
 
+async function getPlayerStatus(apiKey, playerId) {
+    const response = await fetch(
+        `https://api.torn.com/v2/user/${playerId}?selections=profile&key=${encodeURIComponent(apiKey)}`
+    );
+
+    const data = await response.json();
+
+    if (!response.ok || data.error) {
+        throw new Error(
+            data.error?.error || `Torn API error: ${response.status}`
+        );
+    }
+
+    return data;
+}
+
 async function loadPlayers() {
     const response = await fetch(
         `${SUPABASE_URL}/rest/v1/players?select=id,name,level,total,strength,defense,speed,dexterity&order=level.desc`,
