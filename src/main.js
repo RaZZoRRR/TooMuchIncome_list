@@ -52,6 +52,14 @@ async function loadPlayers() {
 
     return await response.json();
 }
+    function formatHospitalTime(until) {
+        const remaining = Math.max(0, until - Math.floor(Date.now() / 1000));
+
+        const minutes = Math.floor(remaining / 60);
+        const seconds = remaining % 60;
+
+        return `${minutes}m ${seconds}s`;
+    }
 
 async function renderPlayers(players) {
     const table = document.getElementById("data-table");
