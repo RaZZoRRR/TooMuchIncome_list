@@ -271,3 +271,74 @@ fetchButton.addEventListener("click", async (event) => {
 
     fetchButton.disabled = false;
 });
+
+//ADD PLAYER
+const playerIdInput = document.getElementById("player-id");
+const addPlayerButton = document.getElementById("add-player-button");
+const addPlayerMessage = document.getElementById("add-player-message");
+
+addPlayerButton.addEventListener("click", async () => {
+    const apiKey = apiKeyInput.value.trim();
+    const playerId = playerIdInput.value.trim();
+
+    if (!apiKey) {
+        addPlayerMessage.textContent = "Enter your Torn API key first.";
+        return;
+    }
+
+    if (!playerId) {
+        addPlayerMessage.textContent = "Enter a Torn Player ID.";
+        return;
+    }
+
+    addPlayerButton.disabled = true;
+    addPlayerMessage.textContent = "Loading player data...";
+
+    try {
+        const status = await getPlayerStatus(apiKey, playerId);
+        const profile = status.profile;
+
+        if (!profile) {
+            throw new Error("Player profile was not returned.");
+        }
+
+        const player = {
+            id: Number(playerId),
+            name: profile.name,
+            level: profile.level,
+            total: profile.total,
+            strength: profile.strength,
+            defense: profile.defense,
+            speed: profile.speed,
+            dexterity: profile.dexterity
+        };
+
+        addPlayerMessage.textContent = "Adding player...";
+
+        const response = await fetch(ADD_PLAYER_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(player)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.error || `Server error: ${response.status}`);
+        }
+
+        addPlayerMessage.textContent = `Player ${player.name} added successfully.`;
+
+        playerIdInput.value = "";
+
+        console.log("Player added:", result);
+
+    } catch (error) {
+        console.error("Failed to add player:", error);
+        addPlayerMessage.textContent = error.message || "Failed to add player.";
+    }
+
+    addPlayerButton.disabled = false;
+});
