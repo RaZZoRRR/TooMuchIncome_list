@@ -336,6 +336,38 @@ addPlayerButton.addEventListener("click", async () => {
 
         console.log("Player added:", result);
 
+        const players = await loadPlayers();
+
+for (const player of players) {
+    try {
+        const status = await getPlayerStatus(
+            apiKeyInput.value.trim(),
+            player.id
+        );
+
+        const playerStatus = status.profile?.status;
+
+        if (playerStatus?.state === "Hospital" && playerStatus.until) {
+            player.hospitalUntil = playerStatus.until;
+            player.status = formatHospitalTime(playerStatus.until);
+        } else {
+            player.hospitalUntil = null;
+            player.status = playerStatus?.description || "Unknown";
+        }
+    } catch (error) {
+        console.error(
+            `Failed to get status for ${player.name}:`,
+            error
+        );
+
+        player.status = "Error";
+    }
+}
+
+await renderPlayers(players);
+
+startHospitalCountdown(players);
+        
         playerIdInput.value = "";
         playerNameInput.value = "";
         playerLevelInput.value = "";
