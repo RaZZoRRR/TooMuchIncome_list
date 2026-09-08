@@ -171,6 +171,8 @@ async function renderPlayers(players) {
 const apiKeyInput = document.getElementById("api-key");
 const fetchButton = document.getElementById("fetch-button");
 
+let hospitalCountdownInterval = null;
+
 fetchButton.addEventListener("click", async (event) => {
     event.preventDefault();
     fetchButton.disabled = true;
