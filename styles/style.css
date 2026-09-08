@@ -1,11 +1,13 @@
 body {
     margin: 0;
+    font-family: Arial, sans-serif;
+
     background-image:
         linear-gradient(
-            rgba(5, 8, 15, 0.55),
-            rgba(5, 8, 15, 0.55)
+            rgba(5, 8, 15, 0.45),
+            rgba(5, 8, 15, 0.45)
         ),
-        url("../assets/a_dark_cinematic_ultra_detailed_dystopian_war_ar.png");
+        url("../assets/background.png");
 
     background-size: cover;
     background-position: center top;
