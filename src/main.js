@@ -173,6 +173,7 @@ const fetchButton = document.getElementById("fetch-button");
 
 fetchButton.addEventListener("click", async (event) => {
     event.preventDefault();
+    fetchButton.disabled = true;
 
     const apiKey = apiKeyInput.value.trim();
 
