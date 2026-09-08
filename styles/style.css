@@ -7,7 +7,7 @@ body {
             rgba(5, 8, 15, 0.45),
             rgba(5, 8, 15, 0.45)
         ),
-        url("../assets/background.png");
+        url("../assets/background.webp");
 
     background-size: cover;
     background-position: center top;
