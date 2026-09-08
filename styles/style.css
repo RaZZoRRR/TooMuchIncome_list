@@ -14,3 +14,9 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
+
+.main-content {
+    background: rgba(5, 8, 15, 0.35);
+    backdrop-filter: blur(2px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
