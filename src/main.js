@@ -90,7 +90,32 @@ async function loadPlayers() {
     
                 if (remaining <= 0) {
                     statusCell.textContent = "Checking...";
-                return;
+                
+                    getPlayerStatus(apiKeyInput.value.trim(), player.id)
+                        .then((status) => {
+                            const playerStatus = status.profile?.status;
+                
+                            if (playerStatus?.state === "Hospital" && playerStatus.until) {
+                                player.hospitalUntil = playerStatus.until;
+                                statusCell.textContent = formatHospitalTime(
+                                    playerStatus.until
+                                );
+                            } else {
+                                player.hospitalUntil = null;
+                                statusCell.textContent =
+                                    playerStatus?.description || "Unknown";
+                            }
+                        })
+                        .catch((error) => {
+                            console.error(
+                                `Failed to refresh status for ${player.name}:`,
+                                error
+                            );
+                
+                            statusCell.textContent = "Error";
+                        });
+                
+                    return;
                 }
     
                 statusCell.textContent = formatHospitalTime(
