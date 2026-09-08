@@ -3,10 +3,6 @@ body {
     font-family: Arial, sans-serif;
 
     background-image:
-        linear-gradient(
-            rgba(5, 8, 15, 0.45),
-            rgba(5, 8, 15, 0.45)
-        ),
         url("../assets/background.webp");
 
     background-size: cover;
@@ -17,6 +13,5 @@ body {
 
 .main-content {
     background: rgba(5, 8, 15, 0.35);
-    backdrop-filter: blur(2px);
     border: 1px solid rgba(255, 255, 255, 0.06);
 }
