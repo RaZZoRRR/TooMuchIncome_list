@@ -89,8 +89,8 @@ async function loadPlayers() {
                 );
     
                 if (remaining <= 0) {
-                    statusCell.textContent = "Hospital";
-                    return;
+                    statusCell.textContent = "Checking...";
+                return;
                 }
     
                 statusCell.textContent = formatHospitalTime(
