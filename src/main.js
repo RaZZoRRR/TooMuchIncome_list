@@ -62,8 +62,11 @@ async function loadPlayers() {
     }
 
     function startHospitalCountdown(players) {
-        hospitalCountdownInterval = setInterval(() => {
-            setInterval(() => {
+        if (hospitalCountdownInterval) {
+            clearInterval(hospitalCountdownInterval);
+        }
+
+    hospitalCountdownInterval = setInterval(() => {
             
             players.forEach((player) => {
                 if (!player.hospitalUntil) {
