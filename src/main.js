@@ -336,6 +336,11 @@ addPlayerButton.addEventListener("click", async () => {
 
         console.log("Player added:", result);
 
+        const addPlayerModal = document.getElementById("add-player-modal");
+
+        addPlayerModal.classList.add("hidden");
+        addPlayerModal.classList.remove("flex");
+        
         const players = await loadPlayers();
 
 for (const player of players) {
