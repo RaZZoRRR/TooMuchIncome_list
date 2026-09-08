@@ -72,6 +72,10 @@ async function loadPlayers() {
                 if (!player.hospitalUntil) {
                     return;
                 }
+
+                if (player.statusRefreshing) {
+                    return;
+                }
     
                 const statusCell = document.getElementById(
                     `status-${player.id}`
