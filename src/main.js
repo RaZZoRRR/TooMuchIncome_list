@@ -227,4 +227,6 @@ fetchButton.addEventListener("click", async (event) => {
     } catch (error) {
         console.error("Torn API failed:", error);
     }
+
+    fetchButton.disabled = false;
 });
