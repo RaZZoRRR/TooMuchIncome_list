@@ -331,16 +331,13 @@ addPlayerButton.addEventListener("click", async () => {
             );
         }
 
-        addPlayerMessage.textContent =
-            `Player ${player.name} added successfully.`;
-
         console.log("Player added:", result);
 
         const addPlayerModal = document.getElementById("add-player-modal");
-
-        addPlayerModal.classList.add("hidden");
-        addPlayerModal.classList.remove("flex");
         
+        addPlayerModal.classList.remove("flex");
+        addPlayerModal.classList.add("hidden");
+                
         const players = await loadPlayers();
 
 for (const player of players) {
