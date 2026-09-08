@@ -98,6 +98,8 @@ async function loadPlayers() {
                 
                     getPlayerStatus(apiKeyInput.value.trim(), player.id)
                         .then((status) => {
+                            player.statusRefreshing = false;
+                            
                             const playerStatus = status.profile?.status;
                 
                             if (playerStatus?.state === "Hospital" && playerStatus.until) {
@@ -112,6 +114,8 @@ async function loadPlayers() {
                             }
                         })
                         .catch((error) => {
+                            player.statusRefreshing = false;
+                            
                             console.error(
                                 `Failed to refresh status for ${player.name}:`,
                                 error
