@@ -185,7 +185,10 @@
                             </div>
 
                         </form>
-                        <div class="mt-6 w-full text-center">
+                        <div
+                            class="mt-6 w-full text-center"
+                            x-data="{ addPlayerOpen: false }"
+                        >
     <button
         type="button"
         id="open-add-player"
@@ -197,7 +200,6 @@
 </div>
 
 <div
-    x-data="{ addPlayerOpen: false }"
     x-show="addPlayerOpen"
     x-cloak
     class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4"
