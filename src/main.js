@@ -2,6 +2,7 @@ console.log("Too Much Income List - Torn API test v1");
 
 const SUPABASE_URL = "https://dsknucquniwmaogpbyax.supabase.co";
 const SUPABASE_KEY = "sb_publishable_CxUR4WE-nJtN5JstJNeF-Q_PSShAYto";
+const ADD_PLAYER_URL = "https://dsknucquniwmaogpbyax.supabase.co/functions/v1/add-player";
 
 async function testTornApi(apiKey) {
     const response = await fetch(
