@@ -1,4 +1,14 @@
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    background-image:
+        linear-gradient(
+            rgba(5, 8, 15, 0.55),
+            rgba(5, 8, 15, 0.55)
+        ),
+        url("../assets/a_dark_cinematic_ultra_detailed_dystopian_war_ar.png");
+
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
