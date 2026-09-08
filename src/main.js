@@ -94,6 +94,7 @@ async function loadPlayers() {
     
                 if (remaining <= 0) {
                     statusCell.textContent = "Checking...";
+                    player.statusRefreshing = true;
                 
                     getPlayerStatus(apiKeyInput.value.trim(), player.id)
                         .then((status) => {
