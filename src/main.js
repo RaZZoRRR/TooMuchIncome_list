@@ -274,47 +274,47 @@ fetchButton.addEventListener("click", async (event) => {
 
 //ADD PLAYER
 const playerIdInput = document.getElementById("player-id");
+const playerNameInput = document.getElementById("player-name");
+const playerLevelInput = document.getElementById("player-level");
+const playerTotalInput = document.getElementById("player-total");
+const playerStrengthInput = document.getElementById("player-strength");
+const playerDefenseInput = document.getElementById("player-defense");
+const playerSpeedInput = document.getElementById("player-speed");
+const playerDexterityInput = document.getElementById("player-dexterity");
+
 const addPlayerButton = document.getElementById("add-player-button");
 const addPlayerMessage = document.getElementById("add-player-message");
 
 addPlayerButton.addEventListener("click", async () => {
-    const apiKey = apiKeyInput.value.trim();
-    const playerId = playerIdInput.value.trim();
+    const player = {
+        id: Number(playerIdInput.value),
+        name: playerNameInput.value.trim(),
+        level: Number(playerLevelInput.value),
+        total: Number(playerTotalInput.value),
+        strength: Number(playerStrengthInput.value),
+        defense: Number(playerDefenseInput.value),
+        speed: Number(playerSpeedInput.value),
+        dexterity: Number(playerDexterityInput.value)
+    };
 
-    if (!apiKey) {
-        addPlayerMessage.textContent = "Enter your Torn API key first.";
-        return;
-    }
-
-    if (!playerId) {
-        addPlayerMessage.textContent = "Enter a Torn Player ID.";
+    if (
+        !player.id ||
+        !player.name ||
+        !player.level ||
+        !player.total ||
+        !player.strength ||
+        !player.defense ||
+        !player.speed ||
+        !player.dexterity
+    ) {
+        addPlayerMessage.textContent = "Please fill in all fields.";
         return;
     }
 
     addPlayerButton.disabled = true;
-    addPlayerMessage.textContent = "Loading player data...";
+    addPlayerMessage.textContent = "Adding player...";
 
     try {
-        const status = await getPlayerStatus(apiKey, playerId);
-        const profile = status.profile;
-
-        if (!profile) {
-            throw new Error("Player profile was not returned.");
-        }
-
-        const player = {
-            id: Number(playerId),
-            name: profile.name,
-            level: profile.level,
-            total: profile.total,
-            strength: profile.strength,
-            defense: profile.defense,
-            speed: profile.speed,
-            dexterity: profile.dexterity
-        };
-
-        addPlayerMessage.textContent = "Adding player...";
-
         const response = await fetch(ADD_PLAYER_URL, {
             method: "POST",
             headers: {
@@ -326,18 +326,30 @@ addPlayerButton.addEventListener("click", async () => {
         const result = await response.json();
 
         if (!response.ok) {
-            throw new Error(result.error || `Server error: ${response.status}`);
+            throw new Error(
+                result.error || `Server error: ${response.status}`
+            );
         }
 
-        addPlayerMessage.textContent = `Player ${player.name} added successfully.`;
-
-        playerIdInput.value = "";
+        addPlayerMessage.textContent =
+            `Player ${player.name} added successfully.`;
 
         console.log("Player added:", result);
 
+        playerIdInput.value = "";
+        playerNameInput.value = "";
+        playerLevelInput.value = "";
+        playerTotalInput.value = "";
+        playerStrengthInput.value = "";
+        playerDefenseInput.value = "";
+        playerSpeedInput.value = "";
+        playerDexterityInput.value = "";
+
     } catch (error) {
         console.error("Failed to add player:", error);
-        addPlayerMessage.textContent = error.message || "Failed to add player.";
+
+        addPlayerMessage.textContent =
+            error.message || "Failed to add player.";
     }
 
     addPlayerButton.disabled = false;
